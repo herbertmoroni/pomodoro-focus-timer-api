@@ -5,8 +5,10 @@ const doc = {
       title: 'Task API',
       description: 'Task API Documentation'
   },
-  host: 'localhost:3000',
+  host: 'https://pomodoro-focus-timer-api.onrender.com',
   schemes: ['http'],
+  //host: 'localhost:3000',
+  //schemes: ['http'],
   definitions: {
       TaskInput: {
           taskName: "Discounts",
