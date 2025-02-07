@@ -8,7 +8,7 @@
   "host": "https://pomodoro-focus-timer-api.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/tasks/": {

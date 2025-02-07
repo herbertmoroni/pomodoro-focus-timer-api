@@ -19,4 +19,24 @@ Content-Type: application/json
 }
 
 
+
+
 ### Render Tests for Tasks
+
+### Get all tasks
+GET https://pomodoro-focus-timer-api.onrender.com/tasks
+
+### Create new Task
+POST https://pomodoro-focus-timer-api.onrender.com/tasks
+Content-Type: application/json
+
+{
+    "taskName": "Discounts 2",
+    "description": "Time spent on Discounts and Promotions",
+    "totalTimeSpent": 0,
+    "category": "Work",
+    "isActive": true,
+    "defaultDuration":1500,
+    "createdAt": "2025-02-06 14:00:00",
+    "updatedAt": null
+}

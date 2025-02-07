@@ -6,7 +6,7 @@ const doc = {
       description: 'Task API Documentation'
   },
   host: 'https://pomodoro-focus-timer-api.onrender.com',
-  schemes: ['http'],
+  schemes: ['https'],
   //host: 'localhost:3000',
   //schemes: ['http'],
   definitions: {
