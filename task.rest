@@ -1,0 +1,22 @@
+### Local Tests for Tasks
+
+### Get all tasks
+GET http://localhost:3000/tasks
+
+### Create new Task
+POST http://localhost:3000/task
+Content-Type: application/json
+
+{
+    "taskName": "EDI",
+    "description": "Time spent on EDI",
+    "totalTimeSpent": 0,
+    "category": "Work",
+    "isActive": true,
+    "defaultDuration":1500,
+    "createdAt": "2025-02-06 14:00:00",
+    "updatedAt": null
+}
+
+
+### Render Tests for Tasks

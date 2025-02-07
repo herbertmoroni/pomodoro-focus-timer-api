@@ -1,0 +1,21 @@
+{
+  "name": "pomodoro-focus-timer-api",
+  "version": "1.0.0",
+  "description": "A RESTful API for managing Pomodoro tasks and sessions, helping users track their time and productivity efficiently.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "swagger": "node swagger-autogen.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
