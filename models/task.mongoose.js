@@ -35,6 +35,7 @@ const taskSchema = new mongoose.Schema({
 // Convert Mongoose document to Task interface
 taskSchema.methods.toTaskInterface = function() {
     return new Task({
+        taskId: this._id,
         taskName: this.taskName,
         description: this.description,
         totalTimeSpent: this.totalTimeSpent,
@@ -49,6 +50,7 @@ taskSchema.methods.toTaskInterface = function() {
 // Create Task from interface
 taskSchema.statics.fromTaskInterface = function(taskInterface) {
     return new this({
+        taskId: taskInterface.taskId,
         taskName: taskInterface.taskName,
         description: taskInterface.description,
         totalTimeSpent: taskInterface.totalTimeSpent,

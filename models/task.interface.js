@@ -1,5 +1,6 @@
 class Task {
     constructor(data = {}) {
+        this.taskId = data.taskId;
         this.taskName = data.taskName;
         this.description = data.description;
         this.totalTimeSpent = data.totalTimeSpent || 0;

@@ -1,0 +1,84 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Pomodoro Focus Timer API",
+    "description": "API for managing tasks and tracking time spent on tasks",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/tasks/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "newContact",
+            "in": "body",
+            "description": "Contact information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "taskName": {
+                  "type": "string",
+                  "example": "Discuss project"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Developer"
+                },
+                "totalTimeSpent": {
+                  "type": "number",
+                  "example": 123
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Developer"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "defaultDuration": {
+                  "type": "number",
+                  "example": 1500
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-10-01T00:00:00.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-10-01T00:00:00.000Z"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  }
+}

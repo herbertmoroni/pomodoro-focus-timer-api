@@ -4,12 +4,12 @@
 GET http://localhost:3000/tasks
 
 ### Create new Task
-POST http://localhost:3000/task
+POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
-    "taskName": "EDI",
-    "description": "Time spent on EDI",
+    "taskName": "Discounts",
+    "description": "Time spent on Discounts and Promotions",
     "totalTimeSpent": 0,
     "category": "Work",
     "isActive": true,
