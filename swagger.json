@@ -27,9 +27,9 @@
         "description": "",
         "parameters": [
           {
-            "name": "newContact",
+            "name": "newTask",
             "in": "body",
-            "description": "Contact information.",
+            "description": "Task information.",
             "required": true,
             "schema": {
               "type": "object",

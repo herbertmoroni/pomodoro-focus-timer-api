@@ -14,9 +14,9 @@ class TaskController {
     }
 
     async createTask(req, res) {
-     /*  #swagger.parameters['newContact'] = {
+     /*  #swagger.parameters['newTask'] = {
             in: 'body',
-            description: 'Contact information.',
+            description: 'Task information.',
             required: true,
             schema: {
                 taskName: "Discuss project",
