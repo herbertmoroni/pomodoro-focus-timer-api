@@ -54,7 +54,7 @@ Individual Pomodoro sessions linked to tasks:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/pomodoro-api.git
+git clone https://github.com/herbertmoroni/pomodoro-focus-timer-api.git
 cd pomodoro-api
 ```
 
