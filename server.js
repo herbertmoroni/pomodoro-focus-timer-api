@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors')
 const dotenv = require('dotenv');
+const errorHandler = require('./middleware/errorHandler');
+const AppError = require('./utils/AppError');
 
 // Load environment variables
 dotenv.config();
@@ -8,15 +10,34 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || process.env.PORT;
 
-// Add body parsing middleware
-app.use(cors())
-app.use(express.json());
+// Global Middleware
+app.use(cors());
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+
+// Security Headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
 
 const connectDB = require('./db/connection');
 connectDB();
 
 // Routes
 app.use('/', require('./routes'));
+
+
+// Handle undefined routes
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+// Global error handler
+app.use(errorHandler);
 
 
 app.listen(port, () => {

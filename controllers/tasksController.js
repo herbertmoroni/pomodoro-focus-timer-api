@@ -1,11 +1,13 @@
-// controllers/task.controller.js
 const TaskModel = require('../models/task.mongoose');
 const MongoDBService = require('../db/mongodb');
+const AppError = require('../utils/AppError');
+const catchAsync = require('../utils/catchAsync');
 
 const dbService = new MongoDBService(TaskModel);
 
 class TaskController {
-    async getAllTasks(req, res) {
+    
+    getAllTasks = catchAsync(async (req, res) => {
         /* #swagger.tags = ['Tasks']
            #swagger.description = 'Get all tasks'
            #swagger.responses[200] = {
@@ -17,16 +19,15 @@ class TaskController {
                schema: { message: 'Error message' }
            }
         */
-        try {
-            const tasks = await dbService.find();
-            res.json(tasks);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
+        const tasks = await dbService.find();
+        if (!tasks.length) {
+            throw new AppError('No tasks found', 404);
         }
-    }
+        res.json(tasks);
+    });
 
-    async getTaskById(req, res) {
-        /* #swagger.tags = ['Tasks']
+    getTaskById = catchAsync(async (req, res) => {
+         /* #swagger.tags = ['Tasks']
            #swagger.description = 'Get task by ID'
            #swagger.parameters['id'] = {
                in: 'path',
@@ -43,18 +44,14 @@ class TaskController {
                schema: { message: 'Cannot find task' }
            }
         */
-        try {
-            const task = await dbService.findById(req.params.id);
-            if (!task) {
-                return res.status(404).json({ message: 'Cannot find task' });
-            }
-            res.json(task);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
+        const task = await dbService.findById(req.params.id);
+        if (!task) {
+            throw new AppError('Task not found', 404);
         }
-    }
+        res.json(task);
+    });
 
-    async createTask(req, res) {
+    createTask = catchAsync(async (req, res) => {
         /* #swagger.tags = ['Tasks']
            #swagger.description = 'Create a new task'
            #swagger.parameters['obj'] = {
@@ -72,15 +69,11 @@ class TaskController {
                schema: { message: 'Error message' }
            }
         */
-        try {
-            const task = await dbService.create(req.body);
-            res.status(201).json(task);
-        } catch (err) {
-            res.status(400).json({ message: err.message });
-        }
-    }
+        const task = await dbService.create(req.body);
+        res.status(201).json(task);
+    });
 
-    async updateTask(req, res) {
+    updateTask = catchAsync(async (req, res) => {
         /* #swagger.tags = ['Tasks']
            #swagger.description = 'Update a task'
            #swagger.parameters['id'] = {
@@ -104,18 +97,14 @@ class TaskController {
                schema: { message: 'Cannot find task' }
            }
         */
-        try {
-            const task = await dbService.update(req.params.id, req.body);
-            if (!task) {
-                return res.status(404).json({ message: 'Cannot find task' });
-            }
-            res.json(task);
-        } catch (err) {
-            res.status(400).json({ message: err.message });
+        const task = await dbService.update(req.params.id, req.body);
+        if (!task) {
+            throw new AppError('Task not found', 404);
         }
-    }
+        res.json(task);
+    });
 
-    async deleteTask(req, res) {
+    deleteTask = catchAsync(async (req, res) => {
         /* #swagger.tags = ['Tasks']
            #swagger.description = 'Delete a task'
            #swagger.parameters['id'] = {
@@ -133,16 +122,12 @@ class TaskController {
                schema: { message: 'Cannot find task' }
            }
         */
-        try {
-            const task = await dbService.delete(req.params.id);
-            if (!task) {
-                return res.status(404).json({ message: 'Cannot find task' });
-            }
-            res.json({ message: 'Task deleted' });
-        } catch (err) {
-            res.status(500).json({ message: err.message });
+        const task = await dbService.delete(req.params.id);
+        if (!task) {
+            throw new AppError('Task not found', 404);
         }
-    }
+        res.json({ message: 'Task deleted' });
+    });
 }
 
 module.exports = new TaskController();

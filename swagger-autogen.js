@@ -7,7 +7,7 @@ const doc = {
   },
   host: 'pomodoro-focus-timer-api.onrender.com',
   schemes: ['https'],
-  //host: 'localhost:3000',
+  //host: 'localhost:4000',
   //schemes: ['http'],
   definitions: {
       TaskInput: {
