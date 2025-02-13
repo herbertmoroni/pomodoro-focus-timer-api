@@ -18,6 +18,28 @@ Content-Type: application/json
     "updatedAt": null
 }
 
+### Update Task
+PUT http://localhost:3000/tasks/65ca575c2f7493400c45072a3
+Content-Type: application/json
+
+{
+    "taskName": "Updated Discounts",
+    "description": "Updated description for discounts task",
+    "category": "Marketing"
+}
+
+### Delete Task
+DELETE http://localhost:3000/tasks/65ca575c2f7493400c45072a3
+
+### Validation Test - Create Task with Invalid Duration
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+    "taskName": "Invalid Task",
+    "defaultDuration": 7500
+}
+
 
 
 
@@ -39,4 +61,26 @@ Content-Type: application/json
     "defaultDuration":1500,
     "createdAt": "2025-02-06 14:00:00",
     "updatedAt": null
+}
+
+### Update Task 
+PUT https://pomodoro-focus-timer-api.onrender.com/tasks/67ad554b2d1b056d20fedea2
+Content-Type: application/json
+
+{
+    "taskName": "Updated Discounts",
+    "description": "Updated description for discounts task",
+    "category": "Marketing"
+}
+
+### Delete Task 
+DELETE https://pomodoro-focus-timer-api.onrender.com/tasks/000000000000000000000000
+
+### Validation Test - Create Task with Invalid Duration
+POST https://pomodoro-focus-timer-api.onrender.com/tasks
+Content-Type: application/json
+
+{
+    "taskName": "Invalid Task",
+    "defaultDuration": 7500
 }
