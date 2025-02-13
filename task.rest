@@ -40,6 +40,34 @@ Content-Type: application/json
     "defaultDuration": 7500
 }
 
+### Test 404 Not Found
+GET http://localhost:3000/tasks/000000000000000000000000
+
+### Test Invalid MongoDB ID Format
+GET http://localhost:3000/tasks/invalid-id
+
+### Test Invalid JSON
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "taskName": "Test",
+  invalid syntax here
+}
+
+### Test Database Error (Requires MongoDB to be down)
+GET http://localhost:3000/tasks
+
+### Test Missing Required Field
+POST http://localhost:3000/tasks
+
+Content-Type: application/json
+{
+  "description": "No task name provided"
+}
+
+
+
 
 
 
@@ -83,4 +111,30 @@ Content-Type: application/json
 {
     "taskName": "Invalid Task",
     "defaultDuration": 7500
+}
+
+### Test 404 Not Found
+GET https://pomodoro-focus-timer-api.onrender.com/tasks/000000000000000000000000
+
+### Test Invalid MongoDB ID Format
+GET https://pomodoro-focus-timer-api.onrender.com/tasks/invalid-id
+
+### Test Invalid JSON
+POST https://pomodoro-focus-timer-api.onrender.com/tasks
+Content-Type: application/json
+
+{
+  "taskName": "Test",
+  invalid syntax here
+}
+
+### Test Database Error (Requires MongoDB to be down)
+GET https://pomodoro-focus-timer-api.onrender.com/tasks
+
+### Test Missing Required Field
+POST https://pomodoro-focus-timer-api.onrender.com/tasks
+
+Content-Type: application/json
+{
+  "description": "No task name provided"
 }
