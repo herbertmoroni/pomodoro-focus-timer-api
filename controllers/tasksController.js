@@ -88,7 +88,7 @@ class TaskController {
                required: true,
                schema: { $ref: '#/definitions/TaskInput' }
            }
-           #swagger.responses[200] = {
+           #swagger.responses[204] = {
                description: 'Task updated successfully',
                schema: { $ref: '#/definitions/TaskResponse' }
            }
@@ -101,7 +101,7 @@ class TaskController {
         if (!task) {
             throw new AppError('Task not found', 404);
         }
-        res.json(task);
+        res.status(204).end();
     });
 
     deleteTask = catchAsync(async (req, res) => {
@@ -126,7 +126,7 @@ class TaskController {
         if (!task) {
             throw new AppError('Task not found', 404);
         }
-        res.json({ message: 'Task deleted' });
+        res.status(200).json({ message: 'Task deleted' });
     });
 }
 

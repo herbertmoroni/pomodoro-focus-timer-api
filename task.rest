@@ -92,7 +92,7 @@ Content-Type: application/json
 }
 
 ### Update Task 
-PUT https://pomodoro-focus-timer-api.onrender.com/tasks/67ad554b2d1b056d20fedea2
+PUT https://pomodoro-focus-timer-api.onrender.com/tasks/67ad551d820b657308de6dd5
 Content-Type: application/json
 
 {
@@ -102,7 +102,7 @@ Content-Type: application/json
 }
 
 ### Delete Task 
-DELETE https://pomodoro-focus-timer-api.onrender.com/tasks/000000000000000000000000
+DELETE https://pomodoro-focus-timer-api.onrender.com/tasks/67ad551d820b657308de6dd5
 
 ### Validation Test - Create Task with Invalid Duration
 POST https://pomodoro-focus-timer-api.onrender.com/tasks
