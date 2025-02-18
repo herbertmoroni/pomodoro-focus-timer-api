@@ -145,6 +145,135 @@ const swaggerDefinition = {
           404: { description: 'Task not found' }
         }
       }
+    },
+    '/sessions': {
+      get: {
+        tags: ['Sessions'],
+        summary: 'Get all sessions',
+        responses: {
+          200: {
+            description: 'List of sessions retrieved successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: { $ref: '#/components/schemas/Session' }
+                }
+              }
+            }
+          },
+          404: { description: 'No sessions found' },
+          500: { description: 'Server error' }
+        }
+      },
+      post: {
+        tags: ['Sessions'],
+        summary: 'Create new session',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/SessionInput' }
+            }
+          }
+        },
+        responses: {
+          201: {
+            description: 'Session created successfully',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Session' }
+              }
+            }
+          },
+          400: { description: 'Validation error' },
+          404: { description: 'Task not found' },
+          500: { description: 'Server error' }
+        }
+      }
+    },
+    '/sessions/{id}': {
+      get: {
+        tags: ['Sessions'],
+        summary: 'Get session by ID',
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            required: true,
+            schema: { type: 'string' },
+            description: 'Session ID'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Session found',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Session' }
+              }
+            }
+          },
+          404: { description: 'Session not found' }
+        }
+      },
+      put: {
+        tags: ['Sessions'],
+        summary: 'Update session',
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            required: true,
+            schema: { type: 'string' },
+            description: 'Session ID'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/SessionInput' }
+            }
+          }
+        },
+        responses: {
+          204: {
+            description: 'Session updated successfully'
+          },
+          400: { description: 'Validation error' },
+          404: { description: 'Session not found' }
+        }
+      },
+      delete: {
+        tags: ['Sessions'],
+        summary: 'Delete session',
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            required: true,
+            schema: { type: 'string' },
+            description: 'Session ID'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Session deleted successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    message: { type: 'string', example: 'Session deleted' }
+                  }
+                }
+              }
+            }
+          },
+          404: { description: 'Session not found' }
+        }
+      }
     }
   },
   components: {
@@ -172,6 +301,30 @@ const swaggerDefinition = {
           description: { type: 'string', example: 'Time spent on Discounts and Promotions' },
           category: { type: 'string', example: 'Work' },
           defaultDuration: { type: 'number', example: 1500, default: 1500 }
+        }
+      },
+      Session: {
+        type: 'object',
+        required: ['taskId'],
+        properties: {
+          sessionId: { type: 'string', example: '67a575c2f7493400c45072a4' },
+          taskId: { type: 'string', example: '67a575c2f7493400c45072a3' },
+          startTime: { type: 'string', format: 'date-time', example: '2025-02-07T03:00:00.000Z' },
+          duration: { type: 'number', example: 1500, default: 1500 },
+          completed: { type: 'boolean', example: false, default: false },
+          notes: { type: 'string', example: 'Focused work session with minimal distractions' },
+          createdAt: { type: 'string', format: 'date-time', example: '2025-02-07T03:00:00.000Z' },
+          updatedAt: { type: 'string', format: 'date-time', example: '2025-02-07T03:25:00.000Z' }
+        }
+      },
+      SessionInput: {
+        type: 'object',
+        required: ['taskId'],
+        properties: {
+          taskId: { type: 'string', example: '67a575c2f7493400c45072a3' },
+          duration: { type: 'number', example: 1500, default: 1500 },
+          completed: { type: 'boolean', example: false, default: false },
+          notes: { type: 'string', example: 'Focused work session with minimal distractions' }
         }
       },
       ValidationError: {
