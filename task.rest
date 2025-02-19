@@ -1,5 +1,9 @@
 ### Local Tests for Tasks
 
+### Get tasks (protected route)
+GET http://localhost:3000/tasks
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZC...
+
 ### Get all tasks
 GET http://localhost:3000/tasks
 

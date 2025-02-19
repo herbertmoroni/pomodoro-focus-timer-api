@@ -3,9 +3,19 @@ const cors = require('cors')
 const dotenv = require('dotenv');
 const errorHandler = require('./middleware/errorHandler');
 const AppError = require('./utils/AppError');
+const admin = require('firebase-admin');
 
 // Load environment variables
 dotenv.config();
+
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+  })
+});
 
 const app = express();
 const port = process.env.PORT || process.env.PORT;
