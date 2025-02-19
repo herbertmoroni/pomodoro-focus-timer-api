@@ -113,15 +113,3 @@ http://localhost:3000/api-docs
 - **Categorization**: Flexible task categorization system
 - **Notes**: Add reflections to completed sessions
 
-## Database Support
-
-The API supports multiple database backends through a service layer abstraction:
-
-- MongoDB (default)
-- AWS DynamoDB (configurable)
-- Azure Cosmos DB (configurable)
-
-Switch databases by updating the DB_TYPE environment variable:
-```env
-DB_TYPE=mongodb  # or dynamodb or cosmosdb
-```
