@@ -1,15 +1,15 @@
 ### Local Tests for Tasks
-
-### Get tasks (protected route)
-GET http://localhost:3000/tasks
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZC...
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTc0MDAyMDM3NSwiZXhwIjoxNzQwMDIzOTc1LCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0Bwb21vZG9yby1hcGktNzg1N2UuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0Bwb21vZG9yby1hcGktNzg1N2UuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJ1aWQiOiJUS1g3R0xmTVhDUEtZYzh6UDBDdlE4ZXhCZTgyIn0.aXztivmN_JiWp2tG5OHQCucYY9AqQOLq1OQA7gP-M0ZPOTGnAGQ7Qofnyi43CE_FVWZ39x_dVRlUilgc4NZVFIt8KXO579C8vxpIUKL0n7l4vEbgfbVs96LeNzXMB6OzreavpH-jY2n5sA7uRC_qZY3DncjC9S0Y4QYThqHXwEMdxL7zqmbFM5hoYPNZf_eo4bbCdtGGDt7DYlMJOH9xvoE2p6fF65xOGuSMpL16w-dcPtTCBMFBN82aPEQqfLsLi6CHSEAp-9a0K1SG4l-tNCq9JYYxCk07G4ojJzOLbFvJ4RWGvw74ge0c8PXgQ3PfMh2ZQwWQVnwo-DECb7lUtQ
 
 ### Get all tasks
-GET http://localhost:3000/tasks
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
 
 ### Create new Task
-POST http://localhost:3000/tasks
+POST {{baseUrl}}/tasks
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "taskName": "Discounts",
@@ -17,14 +17,15 @@ Content-Type: application/json
     "totalTimeSpent": 0,
     "category": "Work",
     "isActive": true,
-    "defaultDuration":1500,
+    "defaultDuration": 1500,
     "createdAt": "2025-02-06 14:00:00",
     "updatedAt": null
 }
 
 ### Update Task
-PUT http://localhost:3000/tasks/65ca575c2f7493400c45072a3
+PUT {{baseUrl}}/tasks/65ca575c2f7493400c45072a3
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "taskName": "Updated Discounts",
@@ -33,11 +34,13 @@ Content-Type: application/json
 }
 
 ### Delete Task
-DELETE http://localhost:3000/tasks/65ca575c2f7493400c45072a3
+DELETE {{baseUrl}}/tasks/65ca575c2f7493400c45072a3
+Authorization: Bearer {{token}}
 
 ### Validation Test - Create Task with Invalid Duration
-POST http://localhost:3000/tasks
+POST {{baseUrl}}/tasks
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "taskName": "Invalid Task",
@@ -45,31 +48,35 @@ Content-Type: application/json
 }
 
 ### Test 404 Not Found
-GET http://localhost:3000/tasks/000000000000000000000000
+GET {{baseUrl}}/tasks/000000000000000000000000
+Authorization: Bearer {{token}}
 
 ### Test Invalid MongoDB ID Format
-GET http://localhost:3000/tasks/invalid-id
+GET {{baseUrl}}/tasks/invalid-id
+Authorization: Bearer {{token}}
 
-### Test Invalid JSON
-POST http://localhost:3000/tasks
+### Render Tests for Tasks
+@prodUrl = https://pomodoro-focus-timer-api.onrender.com
+
+### Get all tasks (Production)
+GET {{prodUrl}}/tasks
+Authorization: Bearer {{token}}
+
+### Create new Task (Production)
+POST {{prodUrl}}/tasks
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "taskName": "Test",
-  invalid syntax here
+    "taskName": "Discounts 2",
+    "description": "Time spent on Discounts and Promotions",
+    "totalTimeSpent": 0,
+    "category": "Work",
+    "isActive": true,
+    "defaultDuration": 1500,
+    "createdAt": "2025-02-06 14:00:00",
+    "updatedAt": null
 }
-
-### Test Database Error (Requires MongoDB to be down)
-GET http://localhost:3000/tasks
-
-### Test Missing Required Field
-POST http://localhost:3000/tasks
-
-Content-Type: application/json
-{
-  "description": "No task name provided"
-}
-
 
 
 
