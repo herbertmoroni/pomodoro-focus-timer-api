@@ -12,6 +12,11 @@ const swaggerDefinition = {
         url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://pomodoro-focus-timer-api.onrender.com',
     }
   ],
+  security: [
+    {
+      bearerAuth: []
+    }
+  ],
   paths: {
     '/tasks': {
       get: {
@@ -277,6 +282,13 @@ const swaggerDefinition = {
     }
   },
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT'
+      }
+    },
     schemas: {
       Task: {
         type: 'object',
