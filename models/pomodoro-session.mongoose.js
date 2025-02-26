@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
-const PomodoroSession = require('./pomodoro-session.interface');
 
 const sessionSchema = new mongoose.Schema({
     taskId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Task',
+        required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     startTime: {
@@ -27,29 +31,11 @@ const sessionSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Convert Mongoose document to PomodoroSession interface
-sessionSchema.methods.toSessionInterface = function() {
-    return new PomodoroSession({
-        sessionId: this._id,
-        taskId: this.taskId,
-        startTime: this.startTime,
-        duration: this.duration,
-        completed: this.completed,
-        notes: this.notes,
-        createdAt: this.createdAt,
-        updatedAt: this.updatedAt
-    });
-};
-
-// Create PomodoroSession from interface
-sessionSchema.statics.fromSessionInterface = function(sessionInterface) {
-    return new this({
-        taskId: sessionInterface.taskId,
-        startTime: sessionInterface.startTime,
-        duration: sessionInterface.duration,
-        completed: sessionInterface.completed,
-        notes: sessionInterface.notes,
-    });
+// Add custom validation method
+sessionSchema.methods.validateSession = function() {
+    if (!this.taskId) {
+        throw new Error('Task ID is required');
+    }
 };
 
 const PomodoroSessionModel = mongoose.model('PomodoroSession', sessionSchema);

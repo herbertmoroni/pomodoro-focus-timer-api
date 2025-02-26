@@ -1,6 +1,6 @@
 const PomodoroSessionModel = require('../models/pomodoro-session.mongoose');
 const TaskModel = require('../models/task.mongoose');
-const MongoDBService = require('../db/mongodb');
+const MongoDBService = require('../db/mongodb.service');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -31,7 +31,12 @@ class SessionController {
             throw new AppError('Task not found', 404);
         }
         
-        const session = await dbService.create(req.body);
+        const sessionData = {
+            ...req.body,
+            userId: req.userId // Assuming req.userId contains the authenticated user's ID
+        };
+        
+        const session = await dbService.create(sessionData);
         res.status(201).json(session);
     });
 

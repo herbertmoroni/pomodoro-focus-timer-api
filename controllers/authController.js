@@ -23,6 +23,9 @@ exports.signup = catchAsync(async (req, res, next) => {
   // Generate token
   const token = await admin.auth().createCustomToken(userRecord.uid);
   
+  // Set userId in the request object
+  req.userId = userRecord.uid;
+
   res.status(201).json({
     status: 'success',
     token,
@@ -49,6 +52,9 @@ exports.login = catchAsync(async (req, res, next) => {
     // Generate custom token
     const token = await admin.auth().createCustomToken(userRecord.uid);
     
+    // Set userId in the request object
+    req.userId = userRecord.uid;
+
     // Get user from MongoDB
     const user = await User.findOne({ firebaseUid: userRecord.uid });
     

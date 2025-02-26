@@ -1,5 +1,5 @@
 const TaskModel = require('../models/task.mongoose');
-const MongoDBService = require('../db/mongodb');
+const MongoDBService = require('../db/mongodb.service');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -24,7 +24,12 @@ class TaskController {
     });
 
     createTask = catchAsync(async (req, res) => {
-        const task = await dbService.create(req.body);
+        const taskData = {
+            ...req.body,
+            userId: req.userId // Assuming req.userId contains the authenticated user's ID
+        };
+        
+        const task = await dbService.create(taskData);
         res.status(201).json(task);
     });
 
