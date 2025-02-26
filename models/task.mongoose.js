@@ -1,4 +1,3 @@
-// models/task.mongoose.js
 const mongoose = require('mongoose');
 const Task = require('./task.interface');
 

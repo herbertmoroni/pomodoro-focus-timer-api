@@ -9,7 +9,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-        url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://pomodoro-focus-timer-api.onrender.com',
+      url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://pomodoro-focus-timer-api.onrender.com',
     }
   ],
   security: [
@@ -18,6 +18,79 @@ const swaggerDefinition = {
     }
   ],
   paths: {
+    '/auth/signup': {
+      post: {
+        tags: ['Authentication'],
+        summary: 'Register a new user',
+        security: [], // No authentication required for signup
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/SignupInput' }
+            }
+          }
+        },
+        responses: {
+          201: {
+            description: 'User registered successfully',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/AuthResponse' }
+              }
+            }
+          },
+          400: { description: 'Validation error' },
+          500: { description: 'Server error' }
+        }
+      }
+    },
+    '/auth/login': {
+      post: {
+        tags: ['Authentication'],
+        summary: 'Login with existing credentials',
+        security: [], // No authentication required for login
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/LoginInput' }
+            }
+          }
+        },
+        responses: {
+          200: {
+            description: 'Login successful',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/AuthResponse' }
+              }
+            }
+          },
+          401: { description: 'Invalid credentials' },
+          500: { description: 'Server error' }
+        }
+      }
+    },
+    '/auth/me': {
+      get: {
+        tags: ['Authentication'],
+        summary: 'Get current user profile',
+        responses: {
+          200: {
+            description: 'User profile retrieved successfully',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/UserProfile' }
+              }
+            }
+          },
+          401: { description: 'Unauthorized - Invalid or expired token' },
+          404: { description: 'User not found' },
+          500: { description: 'Server error' }
+        }
+      }
+    },
     '/tasks': {
       get: {
         tags: ['Tasks'],
@@ -290,6 +363,51 @@ const swaggerDefinition = {
       }
     },
     schemas: {
+      SignupInput: {
+        type: 'object',
+        required: ['email', 'password'],
+        properties: {
+          email: { type: 'string', format: 'email', example: 'user@example.com' },
+          password: { type: 'string', format: 'password', example: 'password123' },
+          displayName: { type: 'string', example: 'John Doe' }
+        }
+      },
+      LoginInput: {
+        type: 'object',
+        required: ['email', 'password'],
+        properties: {
+          email: { type: 'string', format: 'email', example: 'user@example.com' },
+          password: { type: 'string', format: 'password', example: 'password123' }
+        }
+      },
+      AuthResponse: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'success' },
+          token: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+          data: {
+            type: 'object',
+            properties: {
+              user: { $ref: '#/components/schemas/UserProfile' }
+            }
+          }
+        }
+      },
+      UserProfile: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', example: '67a575c2f7493400c45072a3' },
+          email: { type: 'string', example: 'user@example.com' },
+          displayName: { type: 'string', example: 'John Doe' },
+          settings: {
+            type: 'object',
+            properties: {
+              defaultPomodoroLength: { type: 'number', example: 1500 },
+              defaultBreakLength: { type: 'number', example: 300 }
+            }
+          }
+        }
+      },
       Task: {
         type: 'object',
         required: ['taskName'],
