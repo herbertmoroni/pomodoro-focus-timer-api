@@ -9,7 +9,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://pomodoro-focus-timer-api.onrender.com',
+      url: process.env.NODE_ENV === 'development' ? 'http://localhost:'+ process.env.PORT : 'https://pomodoro-focus-timer-api.onrender.com',
     }
   ],
   security: [

@@ -1,0 +1,196 @@
+### Configuration
+# Choose the appropriate base URL
+@baseUrl = http://localhost:3000
+# @baseUrl = https://pomodoro-focus-timer-api.onrender.com
+
+### Authentication Workflow
+
+# 1. User Registration
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+    "email": "testuser@example.com",
+    "password": "StrongPassword123!",
+    "displayName": "Test User"
+}
+
+# 2. User Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "testuser@example.com",
+    "password": "StrongPassword123!"
+}
+
+# Capture the token from the response
+@token = response_token_value_here
+
+# 3. Get User Profile
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### Task Management
+
+# 4. Create Task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "taskName": "Project Development",
+    "description": "Develop Pomodoro tracking feature",
+    "category": "Work",
+    "defaultDuration": 1500
+}
+
+# Capture taskId from the response
+@taskId = response_task_id_value
+
+# 5. List Tasks
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
+
+# 6. Get Specific Task
+GET {{baseUrl}}/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+
+# 7. Update Task
+PUT {{baseUrl}}/tasks/{{taskId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "taskName": "Updated Project Development",
+    "description": "Enhanced Pomodoro tracking feature"
+}
+
+### Session Management
+
+# 8. Create Pomodoro Session
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "taskId": "{{taskId}}",
+    "duration": 1500,
+    "notes": "Focused work session"
+}
+
+# Capture sessionId from the response
+@sessionId = response_session_id_value
+
+# 9. List Sessions
+GET {{baseUrl}}/sessions
+Authorization: Bearer {{token}}
+
+# 10. Update Session
+PUT {{baseUrl}}/sessions/{{sessionId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "completed": true,
+    "notes": "Productive session completed"
+}
+
+### Cleanup
+
+# 11. Delete Session
+DELETE {{baseUrl}}/sessions/{{sessionId}}
+Authorization: Bearer {{token}}
+
+# 12. Delete Task
+DELETE {{baseUrl}}/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+
+### Validation and Error Handling Tests
+
+# Registration Validation
+## Missing Email
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+    "password": "WeakPassword123!",
+    "displayName": "Incomplete User"
+}
+
+## Weak Password
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+    "email": "weakpassword@example.com",
+    "password": "weak"
+}
+
+# Authentication Errors
+## Non-Existent User Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "nonexistent@example.com",
+    "password": "randompassword"
+}
+
+# Task Validation
+## Invalid Duration
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "taskName": "Invalid Duration Task",
+    "defaultDuration": 9000
+}
+
+## Missing Required Fields
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "description": "Task without name"
+}
+
+# Session Validation
+## Non-Existent Task
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "taskId": "000000000000000000000000",
+    "duration": 1500
+}
+
+## Exceed Notes Length
+PUT {{baseUrl}}/sessions/{{sessionId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+}
+
+# Resource Handling
+## Invalid ID Format
+PUT {{baseUrl}}/tasks/invalid-id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "taskName": "Try to Update with Invalid ID"
+}
+
+## Delete Non-Existent Resource
+DELETE {{baseUrl}}/tasks/000000000000000000000000
+Authorization: Bearer {{token}}
+
+# Authorization
+## Unauthorized Access
+GET {{baseUrl}}/tasks
