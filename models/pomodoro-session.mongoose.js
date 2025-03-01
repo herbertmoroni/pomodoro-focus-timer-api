@@ -1,3 +1,4 @@
+// models/pomodoro-session.mongoose.js - Updated
 const mongoose = require('mongoose');
 
 const sessionSchema = new mongoose.Schema({
@@ -7,8 +8,7 @@ const sessionSchema = new mongoose.Schema({
         required: true
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String, 
         required: true
     },
     startTime: {
@@ -30,13 +30,6 @@ const sessionSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-
-// Add custom validation method
-sessionSchema.methods.validateSession = function() {
-    if (!this.taskId) {
-        throw new Error('Task ID is required');
-    }
-};
 
 const PomodoroSessionModel = mongoose.model('PomodoroSession', sessionSchema);
 module.exports = PomodoroSessionModel;

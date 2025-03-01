@@ -27,20 +27,12 @@ const taskSchema = new mongoose.Schema({
         default: 1500  // 25 minutes in seconds
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String, 
         required: true
     }
 }, {
     timestamps: true
 });
-
-// Add custom validation method
-taskSchema.methods.validateTask = function() {
-    if (!this.taskName) {
-        throw new Error('Task name is required');
-    }
-};
 
 const TaskModel = mongoose.model('Task', taskSchema);
 

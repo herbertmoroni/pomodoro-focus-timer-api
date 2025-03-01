@@ -1,3 +1,4 @@
+// docs/swagger.js - Updated
 const swaggerJsdoc = require('swagger-jsdoc');
 
 const swaggerDefinition = {
@@ -412,13 +413,14 @@ const swaggerDefinition = {
         type: 'object',
         required: ['taskName'],
         properties: {
-          taskId: { type: 'string', example: '67a575c2f7493400c45072a3' },
+          _id: { type: 'string', example: '67a575c2f7493400c45072a3' },
           taskName: { type: 'string', example: 'Discounts' },
           description: { type: 'string', example: 'Time spent on Discounts and Promotions' },
           totalTimeSpent: { type: 'number', example: 0, default: 0 },
           category: { type: 'string', example: 'Work' },
           isActive: { type: 'boolean', example: true, default: true },
           defaultDuration: { type: 'number', example: 1500, default: 1500 },
+          userId: { type: 'string', example: '67a575c2f7493400c45072a1' },
           createdAt: { type: 'string', format: 'date-time', example: '2025-02-07T02:53:54.124Z' },
           updatedAt: { type: 'string', format: 'date-time', example: '2025-02-07T02:53:54.124Z' }
         }
@@ -437,8 +439,9 @@ const swaggerDefinition = {
         type: 'object',
         required: ['taskId'],
         properties: {
-          sessionId: { type: 'string', example: '67a575c2f7493400c45072a4' },
+          _id: { type: 'string', example: '67a575c2f7493400c45072a4' },
           taskId: { type: 'string', example: '67a575c2f7493400c45072a3' },
+          userId: { type: 'string', example: '67a575c2f7493400c45072a1' },
           startTime: { type: 'string', format: 'date-time', example: '2025-02-07T03:00:00.000Z' },
           duration: { type: 'number', example: 1500, default: 1500 },
           completed: { type: 'boolean', example: false, default: false },
