@@ -3,9 +3,18 @@
 @baseUrl = http://localhost:3000
 # @baseUrl = https://pomodoro-focus-timer-api.onrender.com
 
+# Capture the token from the response
+@token = response_token_value_here
+
+# Capture taskId from the response
+@taskId = response_task_id_value
+
+# Capture sessionId from the response
+@sessionId = response_session_id_value
+
 ### Authentication Workflow
 
-# 1. User Registration
+### 1. User Registration
 POST {{baseUrl}}/auth/signup
 Content-Type: application/json
 
@@ -15,7 +24,7 @@ Content-Type: application/json
     "displayName": "Test User"
 }
 
-# 2. User Login
+### 2. User Login
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
@@ -24,16 +33,13 @@ Content-Type: application/json
     "password": "StrongPassword123!"
 }
 
-# Capture the token from the response
-@token = response_token_value_here
-
-# 3. Get User Profile
+### 3. Get User Profile
 GET {{baseUrl}}/auth/me
 Authorization: Bearer {{token}}
 
 ### Task Management
 
-# 4. Create Task
+### 4. Create Task
 POST {{baseUrl}}/tasks
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -45,18 +51,15 @@ Authorization: Bearer {{token}}
     "defaultDuration": 1500
 }
 
-# Capture taskId from the response
-@taskId = response_task_id_value
-
-# 5. List Tasks
+### 5. List Tasks
 GET {{baseUrl}}/tasks
 Authorization: Bearer {{token}}
 
-# 6. Get Specific Task
+### 6. Get Specific Task
 GET {{baseUrl}}/tasks/{{taskId}}
 Authorization: Bearer {{token}}
 
-# 7. Update Task
+### 7. Update Task
 PUT {{baseUrl}}/tasks/{{taskId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -68,7 +71,7 @@ Authorization: Bearer {{token}}
 
 ### Session Management
 
-# 8. Create Pomodoro Session
+### 8. Create Pomodoro Session
 POST {{baseUrl}}/sessions
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -79,14 +82,11 @@ Authorization: Bearer {{token}}
     "notes": "Focused work session"
 }
 
-# Capture sessionId from the response
-@sessionId = response_session_id_value
-
-# 9. List Sessions
+### 9. List Sessions
 GET {{baseUrl}}/sessions
 Authorization: Bearer {{token}}
 
-# 10. Update Session
+### 10. Update Session
 PUT {{baseUrl}}/sessions/{{sessionId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -98,18 +98,17 @@ Authorization: Bearer {{token}}
 
 ### Cleanup
 
-# 11. Delete Session
+### 11. Delete Session
 DELETE {{baseUrl}}/sessions/{{sessionId}}
 Authorization: Bearer {{token}}
 
-# 12. Delete Task
+### 12. Delete Task
 DELETE {{baseUrl}}/tasks/{{taskId}}
 Authorization: Bearer {{token}}
 
 ### Validation and Error Handling Tests
 
-# Registration Validation
-## Missing Email
+### Registration Validation - Missing Email
 POST {{baseUrl}}/auth/signup
 Content-Type: application/json
 
@@ -118,7 +117,7 @@ Content-Type: application/json
     "displayName": "Incomplete User"
 }
 
-## Weak Password
+### Registration Validation - Weak Password
 POST {{baseUrl}}/auth/signup
 Content-Type: application/json
 
@@ -127,8 +126,7 @@ Content-Type: application/json
     "password": "weak"
 }
 
-# Authentication Errors
-## Non-Existent User Login
+### Authentication Errors - Non-Existent User Login
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
@@ -137,8 +135,7 @@ Content-Type: application/json
     "password": "randompassword"
 }
 
-# Task Validation
-## Invalid Duration
+### Task Validation - Invalid Duration
 POST {{baseUrl}}/tasks
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -148,7 +145,7 @@ Authorization: Bearer {{token}}
     "defaultDuration": 9000
 }
 
-## Missing Required Fields
+### Task Validation - Missing Required Fields
 POST {{baseUrl}}/tasks
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -157,8 +154,7 @@ Authorization: Bearer {{token}}
     "description": "Task without name"
 }
 
-# Session Validation
-## Non-Existent Task
+### Session Validation - Non-Existent Task
 POST {{baseUrl}}/sessions
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -168,7 +164,7 @@ Authorization: Bearer {{token}}
     "duration": 1500
 }
 
-## Exceed Notes Length
+### Session Validation - Exceed Notes Length
 PUT {{baseUrl}}/sessions/{{sessionId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -177,8 +173,7 @@ Authorization: Bearer {{token}}
     "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 }
 
-# Resource Handling
-## Invalid ID Format
+### Resource Handling - Invalid ID Format
 PUT {{baseUrl}}/tasks/invalid-id
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -187,10 +182,9 @@ Authorization: Bearer {{token}}
     "taskName": "Try to Update with Invalid ID"
 }
 
-## Delete Non-Existent Resource
+### Resource Handling - Delete Non-Existent Resource
 DELETE {{baseUrl}}/tasks/000000000000000000000000
 Authorization: Bearer {{token}}
 
-# Authorization
-## Unauthorized Access
+### Authorization - Unauthorized Access
 GET {{baseUrl}}/tasks
